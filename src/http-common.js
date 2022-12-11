@@ -1,10 +1,14 @@
 import axios from "axios";
 
 var token = "";
-var user = JSON.parse(localStorage.getItem('user'));
+var user;
+if (localStorage.getItem('isAdmin')=="true") {
+    user = JSON.parse(localStorage.getItem('admin'));
+} else {
+    user = JSON.parse(localStorage.getItem('user'));
+}
 if (user && user.accessToken) {
     token = user.accessToken;
-
 }
 export default axios.create({
     baseURL: "http://localhost:3000/api", // указание адреса сервера
