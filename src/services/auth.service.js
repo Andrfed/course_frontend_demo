@@ -10,6 +10,7 @@ function loginUser(user) {
             .then(response => {
             if (response.data.accessToken) {
                 localStorage.setItem('user', JSON.stringify(response.data));
+                localStorage.setItem('isAdmin', false);
             }
             return response.data;
         });
@@ -25,6 +26,7 @@ function loginAdmin(admin) {
             .then(response => {
             if (response.data.accessToken) {
                 localStorage.setItem('admin', JSON.stringify(response.data));
+                localStorage.setItem('isAdmin', true);
             }
             return response.data;
         });
