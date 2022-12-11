@@ -8,9 +8,9 @@
                 <li class="list-group-item" v-for="(course, index) in courses" :key="index">
                     <router-link :to="{
                             name: 'course-details',
-                            params: { id: course.id }
+                            params: { id: course.course_id }
                         }">
-                        {{course.description}}
+                        {{ course.course_id }}
                     </router-link>
                 </li>
             </ul>
@@ -35,7 +35,6 @@
         },
         methods: {
             getCourses() {
-                console.log(this.$store.state.authAdmin.admin);
                 http
                     .get("/admincourse/admin_id/" + this.$store.state.authAdmin.admin.id)
                     .then(response => {

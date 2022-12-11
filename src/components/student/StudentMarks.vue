@@ -1,6 +1,8 @@
 <template>
-    <div class="container-fluid" v-if="this.student">
-         <h3>{{this.student.nickname}}</h3>
+    <div class="container-fluid" v-if="currentStudent">
+         <h3>
+            {{ currentStudent.username }}
+        </h3>
          <div class="list-group">
             <li class="list-group-item" v-for="(mark, index) in marks" :key="index">
                 <div class="item">
@@ -11,35 +13,41 @@
     </div>
     <div class="container-fluid" v-else>
         <br>
-        <p>Выберите пользователя</p>
+        <p>Требуется авторизация</p>
     </div>
 </template>
 
 <script>
     import http from "../../http-common";
     export default {
-        name: "student-details",
-        props: ['id'],
+        name: "student-marks",
         data() {
             return {
                 student: null,
+                marks: null,
                 submitted: false
             };
+        },
+        computed: {
+            currentStudent() {
+                return this.$store.state.authUser.user;
+            }
         },
         methods: {
             getStudent() {
                 http
-                    .get("/user/" + this.id)
+                    .get("/user/" + this.$store.state.authUser.user.id)
                     .then(response => {
                         this.student = response.data;
                     })
                     .catch(e => {
                         console.log(e);
                     });
+                    
             },
             getMarks() {
                 http
-                    .get("GetUserArticles/" + this.id)
+                    .get("GetUserArticles/" + this.$store.state.authUser.user.id)
                     .then(response => {
                         this.marks = response.data;
                     })

@@ -20,7 +20,7 @@ import RegisterTeacher from "./components/authorization/RegisterTeacher";
 import RegisterStudent from "./components/authorization/RegisterStudent";
 import ListTeacherCourses from "./components/teacher/ListTeacherCourses";
 import ListStudentCourses from "./components/student/ListStudentCourses";
-
+import StudentMarks from "./components/student/StudentMarks";
 
 const routes = [
     {
@@ -30,6 +30,14 @@ const routes = [
         component: ListStudents,
         meta: {
             title: "Список студентов"
+        }
+    },
+    {
+        path: "/listStudentMarks",
+        name: "student-marks",
+        component: StudentMarks,
+        meta: {
+            title: "Список оценок"
         }
     },
     {

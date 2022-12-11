@@ -2,7 +2,6 @@
     <div id="app">
       <nav class="navbar navbar-dark bg-light border">
         <div v-if="currentStudent">
-          <div class="m-3">
             <div class="list-group m-3">
               <router-link class="item text-primary" to="/listStudentCourses">Курсы</router-link>
             </div>
@@ -17,9 +16,8 @@
             <a href @click.prevent="logOut" class="navbar-brand text-dark">
               Выйти
             </a>
-          </div>
         </div>
-        <div v-else>
+        <div class="m-3" v-else>
           <div v-if="currentTeacher">
           <div class="list-group m-3">
             <router-link class="list-group-item text-primary" to="/listTeacherCourses">Курсы</router-link>

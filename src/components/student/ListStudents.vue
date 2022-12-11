@@ -2,15 +2,13 @@
     <div class="container-fluid">
         <div class="mb-3" v-if="displayContent">
             <h4>Список студентов</h4>
-            <router-link class="item" to="/addStudent">Добавить пользователя</router-link>
-            <router-link class="item" to="/searchStudent">Поиск пользователя</router-link>
             <ul class="list-group">
                 <li class="list-group-item" v-for="(student, index) in students" :key="index">
                     <router-link :to="{
                             name: 'student-details',
                             params: { id: student.id }
                         }">
-                        {{student.name}}
+                        {{student.nickname}}
                     </router-link>
                 </li>
             </ul>

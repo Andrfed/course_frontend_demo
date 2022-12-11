@@ -3,17 +3,14 @@
         <h4>Добавление курса</h4>
         <div class="mb-3" v-if="!submitted">
             <form @submit="addCourse">
-                <input class="form-control" type="text" name="name" id="name" placeholder="ФИО" required v-model="student.name">
+                <input class="form-control" type="text" name="description" id="description" placeholder="Описание" required v-model="course.description">
                 <input class="btn btn-success" type="submit" value="Добавить">
             </form>
         </div>
         <div class="container-fluid" v-else>
             <h4>Вы успешно добавили запись</h4>
             <div class="mb-3">
-                <button class="btn btn-primary" v-on:click="newCourse">Добавить новый курс</button>
-            </div>
-            <div class="mb-3">
-                <router-link to="/listCourses">Вернуться к списку курсов</router-link>
+                <router-link to="/listTeacherCourses">Вернуться к списку курсов</router-link>
             </div>
         </div>
     </div>
@@ -26,9 +23,7 @@
         data() {
             return {
                 course: {
-                    name: "",
-                    username: "username",
-                    password: "password"
+                    description: "description"
                 },
                 submitted: false
             };
@@ -37,28 +32,30 @@
             addCourse(e) {
                 e.preventDefault();
                 var data = {
-                    name: this.course.name,
-                    username: this.course.username,
-                    password: this.course.password
+                    description: this.course.description
                 };
                 http
                     .post("/addCourse", data)
                     .then(response => {
                         this.course.id = response.data.id;
-                    })
+                        var newData = {
+                            admin_id: this.$store.state.authAdmin.admin.id,
+                            course_id: this.course.id
+                        };
+                        http
+                            .post("/addAdminCourse", newData)
+                            .then(response => {
+                                this.teacher_course.id = response.data.id;
+                            })
+                            .catch(e => {
+                                console.log(e);
+                            });
+                        })
                     .catch(e => {
                         console.log(e);
                     });
-
+                
                 this.submitted = true;
-            },
-            newCourse() {
-                this.submitted = false;
-                this.course = {
-                    name: "",
-                    username: "username",
-                    password: "password"
-                };
             }
         }
     }
