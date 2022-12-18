@@ -51,7 +51,6 @@
                     });
             },
             deleteCourse(e) {
-                console.log("OK");
                 e.preventDefault();
                 var formData = Object.fromEntries(new FormData(e.target));
                 

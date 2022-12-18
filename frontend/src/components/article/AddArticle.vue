@@ -2,13 +2,17 @@
     <div class="container-fluid">
         <h4>Добавление статьи</h4>
         <div class="mb-3" v-if="!submitted">
-            <form @submit="addArticle">
-                <input class="form-control" type="text" name="title" id="title" placeholder="Название статьи" required v-model="article.title">
-                <input class="form-control" type="number" name="max_value" id="max_value" placeholder="Максимальная оценка" required v-model="article.max_value">
+            <form class="container" @submit="addArticle">
+                <input class="row" type="text" name="title" id="title" placeholder="Название статьи" required v-model="article.title">
+                <input class="row" type="number" name="max_value" id="max_value" placeholder="Максимальная оценка" required v-model="article.result_max">
+                <div class="row">
+                    <textarea class="col" cols="50" rows="20" name="article_text" id="article_text" required v-model="article.text"></textarea>
+                    <div class="border col" v-if="this.renderMarkdown" v-html="this.renderMarkdown"></div>
+                </div>
                 <input class="btn btn-success" type="submit" value="Добавить">
-                <textarea class="form-control" name="article_text" id="article_text" required v-model="article.text">
-                </textarea>
+                
             </form>
+            
         </div>
         <div class="container-fluid" v-else>
             <h4>Вы успешно добавили запись</h4>
@@ -21,6 +25,7 @@
 
 <script>
     import http from "../../http-common";
+    import marked from "../../marked";
     export default {
         name: "AddArticle",
         props: ['course_id'],
@@ -31,8 +36,15 @@
                     text: "",
                     max_value: 0
                 },
+                markdown: "# Article",
+                renderedMarkdown: null,
                 submitted: false
             };
+        },
+        computed: {
+            renderMarkdown() {
+                return marked(this.article.text);
+            }
         },
         methods: {
             addArticle(e) {
@@ -54,6 +66,8 @@
 
                 this.submitted = true;
             }
+        },
+        mounted() {
         }
     }
 </script>

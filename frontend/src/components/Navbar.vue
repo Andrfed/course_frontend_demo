@@ -7,7 +7,9 @@
               <router-link class="list-group-item text-primary" to="/listStudentCourses">Курсы</router-link>
             </div>
             <div class="list-group m-3 navbar-brand">
-              <router-link class="list-group-item text-primary" to="/listStudentMarks">Оценки</router-link>
+              <router-link class="list-group-item text-primary" :to="{
+                name: 'student-details', 
+                params: { id: currentStudent.id }}">Оценки</router-link>
             </div>
             <div class="list-group m-3 navbar-brand">
                 <router-link class="list-group-item " to="/profile">
